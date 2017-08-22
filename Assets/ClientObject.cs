@@ -18,6 +18,7 @@ public class NetMqListener
 
     private void ListenerWork()
     {
+        AsyncIO.ForceDotNet.Force();
         using (var subSocket = new SubscriberSocket())
         {
             subSocket.Options.ReceiveHighWatermark = 1000;
@@ -30,7 +31,9 @@ public class NetMqListener
                 Debug.Log(frameString);
                 _messageQueue.Enqueue(frameString);
             }
+            subSocket.Close();
         }
+        NetMQConfig.Cleanup();
     }
 
     public void Update()
@@ -64,6 +67,7 @@ public class NetMqListener
     public void Stop()
     {
         _listenerCancelled = true;
+        _listenerWorker.Join();
     }
 }
 

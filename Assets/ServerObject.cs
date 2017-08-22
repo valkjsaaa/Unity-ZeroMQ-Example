@@ -22,6 +22,7 @@ public class NetMqPublisher
 
     private void ListenerWork()
     {
+        AsyncIO.ForceDotNet.Force();
         using (var server = new ResponseSocket())
         {
             server.Bind("tcp://*:12346");
@@ -36,6 +37,7 @@ public class NetMqPublisher
                 server.SendFrame(response);
             }
         }
+        NetMQConfig.Cleanup();
     }
 
     public NetMqPublisher(MessageDelegate messageDelegate)
@@ -55,6 +57,7 @@ public class NetMqPublisher
     public void Stop()
     {
         _listenerCancelled = true;
+        _listenerWorker.Join();
     }
 }
 
