@@ -4,9 +4,11 @@ An example of Unity 3D 2017 works with ZeroMQ
 ### Environment
 
 Unity 2017.1
+
 Python 3.6.0
 
 Tested on macOS Sierra
+Tested on Windows 10
 
 ### What's in this demo
 
